@@ -1,53 +1,32 @@
 ## Sentry
 
-Sends errors and performance data to Sentry. Compatible with Frappe / ERPNext v12 and v13 (Use `master-v13` branch for v13)
+Sends errors and performance data to Sentry. Compatible with Frappe / ERPNext v14.
 
-## Features
+### Features
 
 - Sends front-end and backend errors to Sentry
 - Performance monitoring (only front-end)
 - Sends account email and site when error occurs
 - If `frappe.log_error` is called without exception, it takes the message and title and passes that to Sentry
 
-## Setup
+### Configuring Sentry
 
-For Sentry to work with the python backend and background jobs some changes are required in Frappe.
+You can add the following keys to either the `common_site_config.json` file, or a specific site's `site_config.json` file.
 
-You will need to add the below block of code in the `log_error` function in the `__init__.py` file (https://github.com/frappe/frappe/blob/version-13/frappe/__init__.py#L2012)
+**Note**: Adding any key to a site's `site_config.json` file will override that attribute's value in the `common_site_config.json` file.
 
-```python
-    try:
-        from sentry.utils import capture_exception
-        capture_exception(message, title)
-    except:
-        pass
-```
-
-Additionally you will have to add the below block of code in the `start_worker` function in the `background_jobs.py` file (https://github.com/frappe/frappe/blob/version-13/frappe/utils/background_jobs.py#L172)
-
-```python
-    try:
-        from sentry.utils import init_sentry
-        init_sentry()
-    except:
-        pass
-```
-
-For frontend errors no changes are needed in Frappe. 
-
-## Configuring Sentry
-
-You need to get the Sentry DSN and add it to the `common_site_config.json` file.
-
-```
+```json
 {
-    "sentry_dsn": "https://<key>:<secret>@sentry.io/<project_id>"
+    ...
+    "enable_sentry_developer_mode": true, // to enable sentry when `developer_mode` is active
+    "sentry_dsn": "https://<key>:<secret>@sentry.io/<project_id>",  // fetch from a Sentry project's settings
+    "sentry_site": "", // optional attribute to tag events with a site; default: site URL
+    "sentry_project": "", // optional attribute to tag events with a project; default: site URL
+    "sentry_server_name": "", // optional attribute to tag events with a server name; default: site URL
+    ...
 }
 ```
 
-Adding it to the `site_config.json` file for a site will override the Sentry DSN in the `common_site_config.json` file.
-
-By default Sentry will not log errors if `developer_mode` is set to True. For enabling Sentry in developer mode you must set the `enable_sentry_developer_mode` key as True in the `site_config.json` or `common_site_config.json` file.
-#### License
+### License
 
 MIT

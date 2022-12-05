@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 from . import __version__ as app_version
 
 app_name = "sentry"
 app_title = "Sentry"
-app_publisher = "DigiThinkIT, Inc"
-app_description = "Logs errors to Sentry"
+app_publisher = "Parsimony LLC"
+app_description = "Error Reporting and Telemetry"
 app_icon = "octicon octicon-file-directory"
 app_color = "grey"
-app_email = "valmik@digithinkit.com"
+app_email = "support@parsimony.com"
 app_license = "MIT"
 
 # Includes in <head>
@@ -16,14 +15,14 @@ app_license = "MIT"
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/sentry/css/sentry.css"
-app_include_js = "/assets/js/sentry.min.js"
+app_include_js = "sentry.bundle.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/sentry/css/sentry.css"
-web_include_js = "/assets/js/sentry-web.min.js"
+web_include_js = "sentry-web.bundle.js"
 
 
-boot_session = "sentry.boot.boot_session"
+boot_session = "sentry.sentry.boot.boot_session"
 
 # include js in page
 # page_js = {"page" : "public/js/file.js"}
