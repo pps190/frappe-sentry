@@ -15,7 +15,7 @@ You can add the following keys to either the `common_site_config.json` file, or 
 
 **Note**: Adding any key to a site's `site_config.json` file will override that attribute's value in the `common_site_config.json` file.
 
-```json
+```jsonc
 {
     ...
     "enable_sentry_developer_mode": true, // to enable sentry when `developer_mode` is active
