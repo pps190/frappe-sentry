@@ -35,7 +35,7 @@ def sentry_handle_exception(e):
 	from sentry.sentry.utils import capture_exception
 
 	http_status_code = getattr(e, "http_status_code", 500)
-	if http_status_code >= 500:
+	if http_status_code >= 400 or http_status_code <= 599:
 		try:
 			capture_exception()
 		except Exception as exc:
