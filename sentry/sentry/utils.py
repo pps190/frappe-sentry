@@ -1,3 +1,5 @@
+import json
+
 import frappe
 import sentry_sdk
 from sentry_sdk.integrations.rq import RqIntegration
@@ -32,6 +34,16 @@ def capture_exception(title=None, message=None, reference_doctype=None, referenc
 		if reference_doctype and reference_name:
 			scope.set_tag("reference_doctype", reference_doctype)
 			scope.set_tag("reference_name", reference_name)
+
+		if frappe.local.request:
+			request_context = {}
+			for key, value in frappe.local.request.__dict__.items():
+				try:
+					json.dumps(value)
+					request_context[key] = value
+				except TypeError:
+					continue
+			scope.set_context("request", request_context)
 
 	sentry_sdk.capture_exception()
 
